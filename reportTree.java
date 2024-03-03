@@ -13,6 +13,9 @@ public class reportTree {
     private static class Node {
         Report data; // The data contained in the node
         Node left, right; // The left and right children of the node
+        int numLeftChildren = 0;
+		int numRightChildren = 0;
+
         
         
         /**
@@ -23,7 +26,16 @@ public class reportTree {
         public Node(Report value) {
             data = value;
             left = right = null;
+           
         }
+        
+//        public int getNumLeftChildren() {
+//			return numLeftChildren;
+//		}
+//
+//		public int getNumRightChildren() {
+//			return numRightChildren;
+//		}
     }
     Node root; // The root of the binary search tree
     
@@ -57,14 +69,19 @@ public class reportTree {
             root = new Node(value);
             return root;
         }
-  
+   
         if (copareReport(value, root.data) < 0) {
             root.left = insert(root.left, value);
+            root.numLeftChildren++;
+            
         } else if (copareReport(value, root.data) > 0) {
             root.right = insert(root.right, value);
+            root.numRightChildren++;
         }
         else {
         	root.right = insert(root.right, value);
+            root.numRightChildren++;
+
         }
 
         return root;
@@ -106,6 +123,13 @@ public class reportTree {
         }
     }
     
+    
+    public void printLeftChildern() {
+    	System.out.println(root.numLeftChildren);
+    }
+    public void printRightChildern() {
+    	System.out.println(root.numRightChildren);
+    }
  
      
 }
