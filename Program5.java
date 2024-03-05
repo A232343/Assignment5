@@ -6,6 +6,9 @@ import java.util.Scanner;
 public class Program5 {
 
 	public static void main(String[] args) throws IOException {
+		myBST binaryTree = new myBST();
+
+		String fillPath = args[0];
 
 		  // Example binaryTree for you to use to test your methods
         reportTree binaryTree = new reportTree();
@@ -16,7 +19,7 @@ public class Program5 {
 		System.out.println("Enter the date (e.g., 2022-09-08): ");
 		String date = scanner.nextLine();
 //        enter file path 
-        Report.ReadCSVFile("C:/Users/Abdul/Downloads/accidents.csv", binaryTree, state);
+        Report.ReadCSVFile(fillPath, binaryTree, state);
         
 		long StartCountTime = System.currentTimeMillis();
         int countResult = binaryTree.numReportOnAfterDate(date);
