@@ -1,0 +1,49 @@
+
+# Program5 
+
+
+## Task separation **************************************************** 
+	Abdullahi did: reportTree.java class and Report.java class        *
+	Marzia did: the program5.java class and the myBST.java class      *
+***********************************************************************	
+	
+
+## Prerequisites
+To run this program, ensure you have the following installed:
+- Java JDK (version 8 or higher)
+- [Optional] Any Java IDE like IntelliJ IDEA, Eclipse, or NetBeans
+
+## Setup
+Before running the program, ensure that the CSV file with accident data is placed in a known directory. 
+
+## Running the Program
+To run this program, follow these steps:
+
+1. **Compile the Java Files:**
+   - Open a terminal or command prompt.
+   - Navigate to the directory containing the `Program5.java` and `Report.java` files.
+   - Compile the files using the Java compiler:
+     ```
+     javac Program5.java 
+     ```
+
+2. **Execute the Compiled Program:**
+   - After successful compilation, run the program using Java:
+     ```
+     java Program5
+     ```
+   -  provide a path the file 
+     ```
+     java Program5 <path_to_csv_file>
+     ```
+
+## outputs:
+	xx seconds to build the binary search trees
+	Enter the state (e.g., IL): IL
+	Enter the date (e.g., 2022-09-08): 2022-09-08
+	xx reports are available for IL on and after the date 2022-09-08
+	xx seconds to calculate this using children count fields
+	xx reports are available for IL on and after the date 2022-09-08
+	xx seconds to calculate this using recursive method
+
+
