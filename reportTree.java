@@ -1,9 +1,15 @@
 package accidentpack;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Stack;
+
+
 /**
  * The {@code reportTree} class represents a binary search tree specifically for storing {@code Report} objects.
- * It provides functionalities to add new reports to the tree and print the contents of the tree in reverse order
- * (from the greatest to the smallest based on the start time of the reports).
+ * It provides functionalities to add new reports to the tree and print the contents of the tree in order
+ * (from the smallest to greatest based on the start time of the reports).
+ * @author Abdullahi Abdullahi
  */
 public class reportTree {
 	
@@ -28,14 +34,8 @@ public class reportTree {
             left = right = null;
            
         }
+
         
-//        public int getNumLeftChildren() {
-//			return numLeftChildren;
-//		}
-//
-//		public int getNumRightChildren() {
-//			return numRightChildren;
-//		}
     }
     Node root; // The root of the binary search tree
     
@@ -103,33 +103,77 @@ public class reportTree {
     
 
     /**
-     * Prints the reports in the tree in reverse order (from greatest to smallest based on the start time).
+     * Non-recursive method to perform in-order traversal of the tree and get the number of reports/accidents on and after that date..
      */
-    public void print() {
-    	reverseInOrderRec(root);
+    public int numReportOnAfterDate(String inDate) {
+        LocalDate date = LocalDate.parse(inDate);
+
+    	int Count = 0;
+        Stack<Node> stack = new Stack<>();
+        Node current = root;
+
+        while (current != null || !stack.isEmpty()) {
+            // Reach the leftmost node of the current Node
+            while (current != null) {
+                stack.push(current);
+                current = current.left;
+            }
+
+            // Current must be null at this point, so we process the node at the top of the stack
+            current = stack.pop();
+            LocalDate compareDate = current.data.getStartTime().toLocalDate();
+            if(compareDate.compareTo(date)>=0) {
+            	Count++;
+            }
+            // We have visited the node and its left subtree, now it's time to visit its right subtree
+            current = current.right;
+        }
+		return Count;
     }
+    
     
     /**
-     * Helper method to recursively perform reverse in-order traversal of the tree and print the reports.
+     * Method to perform in-order traversal of the tree and get the number of reports/accidents on and after that date Recursively.
+     * 
+     * @param inDate The date to compare the reports against.
+     * @return The count of reports on and after the specified date.
+     */
+    public int numReportOnAfterDateRec(String inDate) {
+        LocalDate date = LocalDate.parse(inDate);
+        return HnumReportOnAfterDateRec(root, date);
+    }
+
+    /**
+     * Recursive helper method to perform in-order traversal of the tree and count reports.
      * 
      * @param node The current node in the traversal.
+     * @param date The date to compare each report's date against.
+     * @return The count of reports on and after the specified date.
      */
-    private void reverseInOrderRec(Node node) {
-        if (node != null) {
-        	reverseInOrderRec(node.right); // Visit right child
-            System.out.println(node.data + " "); // Print node's data
-            reverseInOrderRec(node.left); // Visit left child
-
+    private int HnumReportOnAfterDateRec(Node node, LocalDate date) {
+        if (node == null) {
+            return 0;
         }
+
+        int count = 0;
+        LocalDate compareDate = node.data.getStartTime().toLocalDate();
+
+        // Count in left subtree
+        count += HnumReportOnAfterDateRec(node.left, date);
+
+        // Check current node
+        if (compareDate.compareTo(date) >= 0) {
+            count++;
+        }
+
+        // Count in right subtree
+        count += HnumReportOnAfterDateRec(node.right, date);
+
+        return count;
     }
-    
-    
-    public void printLeftChildern() {
-    	System.out.println(root.numLeftChildren);
-    }
-    public void printRightChildern() {
-    	System.out.println(root.numRightChildren);
-    }
+
+
+
  
      
 }

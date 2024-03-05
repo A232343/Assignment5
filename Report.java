@@ -1,11 +1,9 @@
 package accidentpack;
 
-
-
 /**
  * This class's different methods calculate Fibonacci numbers.
+
  * @author Abdullahi Abdullahi
- * @version 2/9/2024
  */
 import java.io.BufferedReader;
 import java.util.ArrayList;
@@ -28,7 +26,7 @@ import accidentpack.reportTree;
 
 
 
-
+ 
 
 public class Report {
 	
@@ -88,24 +86,29 @@ public class Report {
 	
 
 	
-	
+	 
 	/**
 	 * Reads a CSV file and creates a list of Report objects from its contents.
-	 * With gbt Assistance  
+	 * Only adds a report to the binary tree if the state in the report matches the specified State.
+	 * With gpt Assistance  
 	 * @param filePath The path of the CSV file to read.
+	 * @param binaryTree The binary tree where the reports are to be added.
+	 * @param State The state to filter the reports by.
 	 * @throws IOException If an error occurs during file reading.
 	 */
-	public static void ReadCSVFile(String filePath, reportTree binaryTree) throws IOException {
-		try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
+	public static void ReadCSVFile(String filePath, reportTree binaryTree, String State) throws IOException {
+	    try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
 	        stream.skip(1) // Skip the header
 	               .map(line -> line.split(","))
 	               .map(rawData -> new Report(rawData[0], Integer.parseInt(rawData[1]), dateFormatter(rawData[2]),
 	                                          dateFormatter(rawData[3]), rawData[4], rawData[5], rawData[6],
 	                                          rawData[7], rawData[8], rawData[9], Double.parseDouble(rawData[10]), rawData[11],
 	                                          rawData[12], rawData[13]))
+	               .filter(report -> report.getState().equals(State)) // Filter reports by State
 	               .forEach(binaryTree::add); // Add each report to the binaryTree
 	    }
 	}
+
 			    
 	
 	private static LocalDateTime dateFormatter(String dateInString) {
