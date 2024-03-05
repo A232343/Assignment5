@@ -6,9 +6,13 @@ import java.util.Scanner;
 public class Program5 {
 
 	public static void main(String[] args) throws IOException {
-		myBST binaryTree = new myBST();
 
-		String fillPath = args[0];
+		String filePath = null;
+		if (args.length > 0) {
+             filePath = args[0]; // Get the file path from the first argument
+        } else {
+            System.out.println("No file path provided.");
+        }
 
 		  // Example binaryTree for you to use to test your methods
         reportTree binaryTree = new reportTree();
@@ -18,13 +22,17 @@ public class Program5 {
 		String state = scanner.nextLine();
 		System.out.println("Enter the date (e.g., 2022-09-08): ");
 		String date = scanner.nextLine();
+		
+		long StartReadFile = System.currentTimeMillis();
 //        enter file path 
-        Report.ReadCSVFile(fillPath, binaryTree, state);
+        Report.ReadCSVFile(filePath, binaryTree, state);
+		long endReadFile = System.currentTimeMillis();
+		double countReadFile = endReadFile - StartReadFile;
         
 		long StartCountTime = System.currentTimeMillis();
         int countResult = binaryTree.numReportOnAfterDate(date);
 		long StopCountTime = System.currentTimeMillis();
-		double countElapsedTime = StopCountTime - StartCountTime;
+		double countElapsedTime = (StopCountTime - StartCountTime)+countReadFile ;
 		
 		System.out.println("\n");
 		System.out.println(countResult + " reports are available for " + state + " on and after the date " + date);
@@ -35,7 +43,7 @@ public class Program5 {
 		long recursiveStartTime = System.currentTimeMillis();
 		int recursiveResult = binaryTree.numReportOnAfterDateRec(date);
 		long recursiveStopTime = System.currentTimeMillis();
-		double recursiveElapsedTime = recursiveStopTime - recursiveStartTime;
+		double recursiveElapsedTime = (recursiveStopTime - recursiveStartTime)+countReadFile;
 
 		System.out.println(recursiveResult + " reports are available for " + state);
 		System.out.println(recursiveElapsedTime + " seconds to calculate this using recursive method");
